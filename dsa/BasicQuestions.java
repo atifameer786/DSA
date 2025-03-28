@@ -1,9 +1,8 @@
-import java.security.KeyStore.Entry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.List;
+
 import java.util.Map;
 import java.util.Vector;
 
@@ -14,7 +13,7 @@ public class BasicQuestions {
         int count = 0;
 
         while (n != 0) {
-            int m = n % 10;
+            // int m = n % 10;
             count += 1;
             n = n / 10;
         }
@@ -31,8 +30,8 @@ public class BasicQuestions {
         int rev = 0;
 
         while (n != 0) {
-            int m = n % 10;
-            rev = m + rev * 10;
+            // int m = n % 10;
+            rev = n%10 + rev * 10;
             n = n / 10;
 
         }
@@ -67,6 +66,7 @@ public class BasicQuestions {
 
     public static boolean isArmstrong(int n) {
 
+        // An armstrong number is a number which is equal to the sum of the digits of the number, raised to the power of the number of digits.
         int copy = n;
         int arms = 0;
         while (n != 0) {
@@ -80,6 +80,8 @@ public class BasicQuestions {
     }
 
     public static boolean isPerfect(int n) {
+
+        // A perfect number is a number whose proper divisors add up to the number itself.
 
         int copy = n;
         int isper = 0;
@@ -575,6 +577,10 @@ public class BasicQuestions {
     }
 
     public static void reverseArrayHelper(int[] nums, int l, int r) {
+
+          /**
+ * when try to do riverse then always thing two pointer approch 
+ */
         if (l >= r) {
             return;
         }
@@ -593,6 +599,10 @@ public class BasicQuestions {
     }
 
     public static boolean isSortedHelper(ArrayList<Integer> nums, int i, int j) {
+
+          /**
+ * most important part in recursion is base case if j > size that means we reach the last element means all elements are sorted 
+ */
         int size = nums.size();
         if (j >= size) {
             return true;
@@ -623,6 +633,10 @@ public class BasicQuestions {
 
     }
     public static int addDigit(int num){
+
+          /**
+ * this is mathmatical formula it will give you the result untile it became 1 single digit thats why we mod num by 9 
+ */
         
         if (num == 0) {
             return 0;
@@ -639,7 +653,12 @@ public class BasicQuestions {
     }
 
     public static int fib(int n) {
-        if(n<=n){
+
+         /**
+ * in fabonacii series most important is base condition n<=1 because series is like this 0,1,1,2,3,5,8,13
+ * 
+ */
+        if(n<=1){
             return 1;
         }
         int f1 = 0;
@@ -656,6 +675,10 @@ public class BasicQuestions {
     }
 
     public static int fibRecursive(int n) {
+          /**
+ * in fabonacii series most important is base condition n<=1 because series is like this 0,1,1,2,3,5,8,13
+ * recursive is very easy because what we need is privious two terms to get the next term so we can get by f(n-2)+f(n-1)
+ */
 
         if(n<=1){
             return 1;
@@ -667,13 +690,136 @@ public class BasicQuestions {
         
     }
 
+    public static int fun(int n){
+        if(n<=0){
+            return 0;
+        }
+        return fun(n-1)+n;
+    }
+
+    public static int[] bubbleSort(int[] arr){
+
+         /**
+ * Bubble Sort operates on the principle that, like a stone sinking in water,
+ * heavier elements "sink" to the end of the array while lighter elements "bubble up."
+ * In each pass, the largest unsorted element moves to its correct position at the end.
+ * By reducing the comparison range with `n-1-i` in each inner loop, we avoid re-checking sorted elements.
+ * The `flag` variable optimizes the process by stopping early if no swaps are needed, indicating 
+ * the list is already sorted.
+ */
+
+        boolean flag = false;
+        int size = arr.length;
+
+        for(int i=0;i<size;i++){
+            for(int j=0;j<size-i-1;j++){
+                if(arr[j]>arr[j+1]){
+                    int tmp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1]=tmp;
+                    flag=true;
+                }
+            }
+            if(flag==false){
+                return arr;
+            }
+
+        }
+        return arr;
+    }
+
+    public static int[] selectionSort(int[] arr){
+
+         // In selection sort we select the postion not element
+        // and try to find out the element for that postion 
+        // and find the smallest element from the array
+        // in selection sort we sort elements from small to large 
+        // but in bubble sort we sort elements from large to small
+        // put all pointers all same postion and then move j by one position and check with k if a[j]<a[k] then bring k to the position of j;
+        // after finding the smalles element we can swap with i with k 
+        int size = arr.length;
+        int i,j,k;
+        for(i=0;i<size;i++){
+            k = i;
+            for(j=i;j<size;j++){
+                if(arr[j]<arr[k]){
+                    k = j;
+                }
+            }
+            int tmp = arr[i];
+            arr[i] = arr[k];
+            arr[k] =tmp;
+        }
+        return arr;
+    }
+
+
+    public static int[] insertionSort(int[] arr){
+        int i;
+        for(i=1;i<arr.length-1;i++){
+            int j = i-1;
+            int tmp = arr[i];
+
+            while(arr[j]>tmp && j>-1){
+                arr[j+1]=arr[j];
+               j--;
+
+            }
+            arr[j+1] = tmp ;
+        }
+        return arr;
+        
+    }
+
+    public static void merge(int[] arr,int l,int mid, int h){
+        int i =l;
+        int k = 0;
+        int j = mid+1;
+        int[] b= new int[h-l+1];
+
+
+        while(i<=mid && j<=h){
+            if(arr[i]<=arr[j]){
+                b[k++] = arr[i++];
+            }
+            else{
+                b[k++] = arr[j++];
+            }
+
+        }
+        for(;i<=mid;i++){
+            b[k++] = arr[i];
+        }
+        for(;j<=h;j++){
+            b[k++] = arr[j];
+        }
+
+        for(i=l,k=0;i<=h;i++,k++){
+            arr[i] = b[k];
+        }
+    }
+
+
+    public static void mergeSort(int[] arr,int l,int h){
+        
+        int mid = (l+h)/2;
+        if(l>=h){
+            return;
+        }
+
+        mergeSort(arr, l, mid);
+        mergeSort(arr, mid+1, h);
+        merge(arr, l, mid, h);
+    }
+
     
+
 
     public static void main(String[] args) {
 
         int n = 4;
         int m = 12345;
-        int[] arr = { 4, 4, 5, 5 };
+        int[] arr = { 4, 8, 7, 5 };
         Vector v = new Vector<>(Arrays.asList('a', 'b', 'c', 'd', 'e'));
         String s = "dog";
         String goal = "cat";
@@ -722,7 +868,15 @@ public class BasicQuestions {
         // System.out.println(isSorted(l));
         // System.out.println(addDigitsRecursive(m));
         // System.out.println(addDigit(m));
-        System.out.println(fib(n));
+        // System.out.println(fib(n));
+        // System.out.println(fun(5));
+        // bubbleSort(arr);
+        // printArry(arr, n);
+        // selectionSort(arr);
+        // insertionSort(arr);
+        mergeSort(arr, 0,arr.length-1);
+        printArry(arr, n);
+
         
     }
 

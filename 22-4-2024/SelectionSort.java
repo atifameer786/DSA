@@ -25,6 +25,7 @@ public class SelectionSort {
         for (i = 0; i < size; i++) {
             k = i;
             for (j = i; j < size; j++) {
+                System.out.println(i+"    "+j+"   "+k);
                 if (nums[j] < nums[k]) {
                     k = j;
                 }
