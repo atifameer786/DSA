@@ -2,7 +2,7 @@ public class QuickSort {
 
     // Idea behind quick sort is such that students arrange them self
     // according to their hights so consider pivot as student 
-    // i try to find the element greater then pivot and j less then pivot
+    // i try to find the element greater then pivot and j try to find lesser then pivot
     // interchange until j coross i and then pivot swap with where j points
 
     public static void quickSort(int[] arr, int low, int high) {
