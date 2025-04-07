@@ -1,9 +1,12 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Hashtable;
-
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 public class BasicQuestions {
@@ -793,7 +796,7 @@ public class BasicQuestions {
     public static void merge(int[] arr, int l, int mid, int h) {
 
         // In merge sort what we do is try to merge tow list from single list
-        // for example if we have tow list then find which is smallest add into auxilary
+        // for example if we have two list then find which is smallest add into auxilary
         // list
         // in this from single list we divide the list into two half and then and then
         // merge one by one in returning time
@@ -843,6 +846,15 @@ public class BasicQuestions {
 
     public static int partition(int[] arr, int l, int h) {
 
+        // in quick sort we use pivot and partition process
+        // find the pivot from left side 0th element
+        // from first while loop try to find the number which is smaller then pivot
+        // becasue loop will continue until it find the number which is smaller then
+        // pivoit form right side
+        // second while loop is try to find the number which is greater then pivoit in
+        // left side and
+        // while loop continue untile it find the number small then pivot
+
         int i = l;
         int j = h;
         int pivot = arr[l];
@@ -860,6 +872,7 @@ public class BasicQuestions {
             }
 
         }
+        // put the pivot element in its correct postion
         swap(arr, l, j);
         return j;
     }
@@ -876,89 +889,468 @@ public class BasicQuestions {
     }
 
     public static int secondLargestElementWithDuplicates(int[] nums) {
-       
+        // in first step copy max1 into max2 for tracking purpose and in second step
+        // check if the number is not max1 and also nums[i]>max2;
+
         int size = nums.length;
         int max1 = Integer.MIN_VALUE;
         int max2 = Integer.MIN_VALUE;
 
-        for(int i=0;i<size-1;i++){
-            if(nums[i]>max1){
-                max2=max1;
-                max1= nums[i];
-            }
-            else if(nums[i]>max2 && nums[i]!=max1){
+        for (int i = 0; i < size - 1; i++) {
+            if (nums[i] > max1) {
+                max2 = max1;
+                max1 = nums[i];
+            } else if (nums[i] > max2 && nums[i] != max1) {
                 max2 = nums[i];
             }
         }
 
-        return max2 == Integer.MIN_VALUE ?-1:max2;
+        return max2 == Integer.MIN_VALUE ? -1 : max2;
 
-        
-    
     }
 
-
-
-
-    // if there are no duplicates in the array then we can use bubble sort to find 2nd largets element from the array 
+    // if there are no duplicates in the array then we can use bubble sort to find
+    // 2nd largets element from the array
     public static int secondLargestElement(int[] nums) {
-       
+
         int size = nums.length;
 
-        for(int i=0;i<2;i++){
-            for(int j=0;j<size-i-1;j++){
-                if(nums[j]>nums[j+1]){
-                    swap(nums, j, j+1);
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < size - i - 1; j++) {
+                if (nums[j] > nums[j + 1]) {
+                    swap(nums, j, j + 1);
                 }
             }
         }
-        
-        return nums[size-2];
-    
+
+        return nums[size - 2];
+
     }
 
     public static int findMaxConsecutiveOnes(int[] nums) {
 
         int count = 0;
         int maxCount = 0;
-        for(int i=0;i<nums.length;i++){
-            
+        for (int i = 0; i < nums.length; i++) {
 
-            if(nums[i]==1){
+            if (nums[i] == 1) {
                 count++;
-                maxCount =max(count,maxCount);
-            }
-            else{
-                count =0;
+                maxCount = max(count, maxCount);
+            } else {
+                count = 0;
             }
         }
 
         return maxCount;
+
+    }
+
+    public static void rotateArrayByOne(int[] nums) {
+
+        int size = nums.length - 1;
+        int tmp = nums[0];
+        for (int i = 0; i < size; i++) {
+            nums[i] = nums[i + 1];
+        }
+        nums[size] = tmp;
+
+    }
+
+    public static void moveZeroes(int[] nums) {
+
+        int j = -1;
+        int size = nums.length;
+        // find the position of first 0 so that put j where the firs 0 is found and then
+        // start comparing from non zero elementes
+        for (int i = 0; i < size; i++) {
+            if (nums[i] == 0) {
+                j = i;
+                break;
+            }
+        }
+
+        // move i and j if it found non zero element but before moving j swap j with i
+        // j start form j+1 because we only need to move zeros so we don't need to check
+        // thos element which are before first zero
+        for (int i = j + 1; i < size; i++) {
+
+            if (nums[i] != 0) {
+                swap(nums, i, j);
+                j++;
+
+            }
+        }
+
+    }
+
+    public static int removeDuplicates(int[] nums) {
+
+        Set<Integer> s = new HashSet<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            s.add(nums[i]);
+        }
+        return s.size();
+    }
+
+    public static int removeDuplicatesOptimal(int[] nums) {
+
+        if (nums.length == 0) {
+            return 0;
+        }
+        int j = 0;
+
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] != nums[j]) {
+                j++;
+                nums[j] = nums[i];
+            }
+        }
+        return j + 1;
+    }
+
+    public static int missingNumber(int[] nums) {
+
+        // find the sum of first n natural numbers and then subtract the sum of elements
+        // of array
+        int sum = 0;
+        int n = nums.length;
+        int value = n * (n + 1) / 2;
+        for (int i = 0; i < n; i++) {
+            sum += nums[i];
+        }
+        int l = value - sum;
+        return l;
+
+    }
+
+    public static void unionArray(int[] nums1, int[] nums2, int[] nums3) {
+
+        int n1 = nums1.length;
+        int n2 = nums2.length;
+        int i = 0;
+        int j = 0;
+        int k = 0;
+
+        while (i < n1 && j < n2) {
+
+            if (nums1[i] < nums2[j]) {
+                nums3[k++] = nums1[i++];
+            } else if (nums1[i] > nums2[j]) {
+                nums3[k++] = nums2[j++];
+            } else {
+                nums3[k++] = nums1[i++];
+                j++;
+            }
+        }
+        while (i < n1) {
+            nums3[k++] = nums1[i++];
+        }
+        while (j < n2) {
+            nums3[k++] = nums2[j++];
+        }
+
+        // return nums3;
+
+    }
+
+    public static void intersectionArray(int[] nums1, int[] nums2, int[] nums3) {
+
+        int n1 = nums1.length;
+        int n2 = nums2.length;
+        int i = 0;
+        int j = 0;
+        int k = 0;
+
+        while (i < n1 && j < n2) {
+
+            if (nums1[i] < nums2[j]) {
+                i++;
+            } else if (nums1[i] > nums2[j]) {
+                j++;
+            } else {
+                nums3[k++] = nums1[i++];
+                j++;
+            }
+        }
+
+    }
+
+    public static ArrayList<Integer> leaders(int[] nums) {
+
+        ArrayList<Integer> al = new ArrayList<>();
+        int size = nums.length;
+        
+
+        for (int i = 0; i < size; i++) {
+            boolean leader =true;
+            for (int j = i+1; j < size; j++) {
+                if (nums[j] >= nums[i]) {
+                    leader = false;
+                    break;
+                }
+                
+            }
+            if(leader){
+                al.add(nums[i]);
+            }
+        }
+
+        return al;
+        
+    
+
+    }
+
+
+
+    public static ArrayList<Integer> leadersOptimal(int[] nums) {
+
+        ArrayList<Integer> al = new ArrayList<>();
+        int size = nums.length;
+    
+        int max = Integer.MIN_VALUE;
+        for(int i = size-2;i>=0;i--){
+            if(nums[i]>max){
+                max = nums[i];
+                al.add(nums[i]);
+            }
+        }
+        
+
+        
+
+        return al;
+        
+    
+
+    }
+
+
+    public static int dominantIndex(int[] nums) {
+
+        int max = Integer.MIN_VALUE;
+        int index = -1;
+        boolean flag = false;
+
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]>max){
+                max = nums[i];
+                index = i;
+            }
+        }
+
+        for(int j=0;j<nums.length;j++){
+            if (max<nums[j]*2){
+                flag =true;
+            }
+
+        }
+        if(flag){
+            return -1;
+        }
+        return index;
+        
         
     }
 
 
-    public void rotateArrayByOne(int[] nums) {
-        
-    }
+        public static int[] rearrangeArray(int[] nums) {
 
-    
+            
+            int size = nums.length;
+            int[] nums1 = new int[size/2];
+            int[] nums2 = new int[size/2];
+            int j = 0;
+            int k=0;
+            
+            for(int i=0;i<size;i++){
+                if(nums[i]>0){
+                    nums2[j++] = nums[i];
+                    
+                }
+                else{
+                    nums1[k++] = nums[i];
+                   
+                }
+            }
+            // int i=0;
+            // j=0;
+            // k=0;
 
-        
+            for(int i=0;i<size/2;i++){
+                nums[2*i] = nums2[i];
+                nums[2*i+1] = nums1[i];
+            }
+
+            // while(i<nums1.length && j<nums2.length){
+            //     nums[k++] =nums2[i++];
+            //     nums[k++] = nums1[j++];
+            // }
+
+        return nums;
+            
+        }
+
+
+
+        public static int[] rearrangeArrayOptimal(int[] nums) {
+            
+            int size = nums.length;
+            int[] arr  = new int[size];
+
+            for(int i=0;i<size;i++){
+                if(nums[i]>0){
+                    arr[2*i] = nums[i];
+                }
+                else{
+                    arr[2*i+1] = nums[i];
+                }
+            }
+
+
+            return arr;
+        }
+
+
+        public static int minElement(int[] arr){
+
+            int min = Integer.MAX_VALUE;
+            int size = arr.length;
+            for(int i=0;i<size;i++){
+                    if(arr[i]<min){
+                        min = arr[i];
+                    }
+                }
+                return min;
     
+        }
+
+
+        public static int maxElement(int[] arr){
+
+            int max = Integer.MIN_VALUE;
+            int size = arr.length;
+            for(int i=0;i<size;i++){
+                    if(arr[i]>max){
+                        max = arr[i];
+                    } 
+                }
+
+            return max;
+
+        }
+
+
+        public static int average(int a,int b){
+
+            int averageNumber =(a+b)/2;
+            return averageNumber;
+
+        }
+
+        // public static int[] removeMinMax(int[] a,int[] b,int max,int min){
+
+        //     int size = a.length;
+            
+        //     for(int i=0;i<size;i++){
+        //         if(a[i]!=min && a[i]!=max){
+        //             b[i] = a[i];
+        //         }
+        //     }
+
+        // }
+
+        public static int[] addAverage(int[] a,int[] b){
+
+            for(int i=0;i<a.length;i++){
+                int av=average(minElement(a), maxElement(a));
+                if(av!=minElement(a) && av!=maxElement(a));
+                b[i] =av;
+               
+            }
+
+            return b;
+        }
+
+
+        public static int minAverage(int[] arr){
+
+
+            List<Integer> list = new ArrayList<>();
+            for(int i : arr){
+                list.add(i);
+            }
+
+
+            Collections.sort(list);
+
+            int i=0;
+            int j=list.size()-1;
+            List<Integer> averageList = new ArrayList<>();
+
+            while (i<j) {
+                int min = Collections.min(list);
+                int max = Collections.max(list);
+                int av = (min+max)/2;
+                averageList.add(av);
+                
+                list.remove(i);
+                list.remove(j);
+                i++;
+                j--;
+            }
+
+
+
+            return Collections.min(averageList);
+        }
+
+
+        // public static int[] ave(int[] arr){
+
+            
+        //     int size = arr.length;
+
+        //     int[] a = new int[size];
+        //     int i=0;
+            
+            
+        //     return a;
+
+   
+        // }
+
+
+
+
+        // public int[] twoSum(int[] nums, int target) {
+
+        //     int sum  = 0;
+        //     int size = nums.length;
+        //     for(int i=0;i<size;i++){
+
+        //     }
+        
+        // }
 
     public static void main(String[] args) {
 
         int n = 4;
         int m = 12345;
         int[] arr = { 4, 8, 7, 5 };
-        int[] nums1={1, 3, 5,0,0,0,0};
-        int[] nums2={2, 4, 6, 7};
-        int[] nums = {1, 1, 0, 0, 1, 1, 1, 0,1,1,1,1};
-        
-        int n2 =nums2.length;
-        int n1 = nums1.length-n2;
-        
+        int[] nums1 = { 1, 2, 3, 5, 17 };
+        int[] nums2 = {7,8,3,4,15,13,4,1 };
+        int n1 = nums1.length;
+        int n2 = nums2.length;
+        int[] arr3 = new int[n2];
+        int[] nums3 = new int[n1 + n2];
+
+        int[] nums = {2, 4, 5, -1, -3, -4};
+
+        // int n2 = nums2.length;
+        // int n1 = nums1.length - n2;
+
         Vector v = new Vector<>(Arrays.asList('a', 'b', 'c', 'd', 'e'));
         String s = "dog";
         String goal = "cat";
@@ -1015,11 +1407,31 @@ public class BasicQuestions {
         // insertionSort(arr);
         // mergeSort(arr, 0, arr.length - 1);
         // printArry(arr, n);
-        
 
         // System.out.println(secondLargestElement(nums2));
-        System.out.println(findMaxConsecutiveOnes(nums));;
-        printArry(nums, nums.length);
+        // System.out.println(findMaxConsecutiveOnes(nums));
+        // printArry(nums3, nums3.length);
+        // rotateArrayByOne(nums);
+        // moveZeroes(nums);
+        // System.out.println(removeDuplicates(nums));
+        // unionArray(nums1, nums2,nums3);
+        // intersectionArray(nums1, nums2, nums3);
+        // leaders(nums);
+
+        // printArry(nums3, nums3.length);
+
+        // System.out.println(dominantIndex(nums));
+        // System.out.println(Arrays.toString(rearrangeArrayOptimal(nums)));
+
+
+        minAverage(nums2);
+
+        System.out.println(Arrays.toString(nums2));
+
+        // System.out.println(maxElement(arr3));
+        System.out.println(minElement(nums2));
+
+
 
     }
 
