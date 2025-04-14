@@ -756,9 +756,12 @@ public class BasicQuestions {
         // and find the smallest element from the array
         // in selection sort we sort elements from small to large
         // but in bubble sort we sort elements from large to small
-        // put all pointers all same postion and then move j by one position and check
+        // put all pointers i,j,k at same postion and then move j by one position and
+        // check
         // with k if a[j]<a[k] then bring k to the position of j;
-        // after finding the smalles element we can swap with i with k
+        // after finding the smalles element we can swap with i with k // int i=0;
+        // j=0;
+        // k=0;
         int size = arr.length;
         int i, j, k;
         for (i = 0; i < size; i++) {
@@ -798,7 +801,7 @@ public class BasicQuestions {
         // In merge sort what we do is try to merge tow list from single list
         // for example if we have two list then find which is smallest add into auxilary
         // list
-        // in this from single list we divide the list into two half and then and then
+        // in this algo from single list we divide the list into two half and then
         // merge one by one in returning time
         //
         int i = l;
@@ -1080,52 +1083,55 @@ public class BasicQuestions {
 
         ArrayList<Integer> al = new ArrayList<>();
         int size = nums.length;
-        
+
+        // leader should be the one where each element to the right of that must be
+        // smaller to that
+        // for example this [1, 2, 5, 3, 1, 2] 5,3,2 are leaders because no element on
+        // their right are greater then them
+        // we can check from left if we found any single element greater to the right
+        // side then we can not add to the list
 
         for (int i = 0; i < size; i++) {
-            boolean leader =true;
-            for (int j = i+1; j < size; j++) {
+            boolean leader = true;
+            for (int j = i + 1; j < size; j++) {
                 if (nums[j] >= nums[i]) {
                     leader = false;
                     break;
                 }
-                
+
             }
-            if(leader){
+            if (leader) {
                 al.add(nums[i]);
             }
         }
 
         return al;
-        
-    
 
     }
 
-
-
     public static ArrayList<Integer> leadersOptimal(int[] nums) {
+
+        // leader should be the one where each element to the right of that must be
+        // smaller to that
+        // for example this [1, 2, 5, 3, 1, 2] 5,3,2 are leaders because no element on
+        // their right are greater then them
+        // in this approch we need to check from right side if any element a[i] > max
+        // then this must be leader
 
         ArrayList<Integer> al = new ArrayList<>();
         int size = nums.length;
-    
+
         int max = Integer.MIN_VALUE;
-        for(int i = size-2;i>=0;i--){
-            if(nums[i]>max){
+        for (int i = size - 2; i >= 0; i--) {
+            if (nums[i] > max) {
                 max = nums[i];
                 al.add(nums[i]);
             }
         }
-        
-
-        
 
         return al;
-        
-    
 
     }
-
 
     public static int dominantIndex(int[] nums) {
 
@@ -1133,220 +1139,328 @@ public class BasicQuestions {
         int index = -1;
         boolean flag = false;
 
-        for(int i=0;i<nums.length;i++){
-            if(nums[i]>max){
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > max) {
                 max = nums[i];
                 index = i;
             }
         }
 
-        for(int j=0;j<nums.length;j++){
-            if (max<nums[j]*2){
-                flag =true;
+        for (int j = 0; j < nums.length; j++) {
+            if (max < nums[j] * 2) {
+                flag = true;
             }
 
         }
-        if(flag){
+        if (flag) {
             return -1;
         }
         return index;
-        
-        
+
     }
 
+    public static int[] rearrangeArray(int[] nums) {
 
-        public static int[] rearrangeArray(int[] nums) {
+        int size = nums.length;
+        int[] nums1 = new int[size / 2];
+        int[] nums2 = new int[size / 2];
+        int j = 0;
+        int k = 0;
 
-            
-            int size = nums.length;
-            int[] nums1 = new int[size/2];
-            int[] nums2 = new int[size/2];
-            int j = 0;
-            int k=0;
-            
-            for(int i=0;i<size;i++){
-                if(nums[i]>0){
-                    nums2[j++] = nums[i];
-                    
-                }
-                else{
-                    nums1[k++] = nums[i];
-                   
-                }
+        for (int i = 0; i < size; i++) {
+            if (nums[i] > 0) {
+                nums2[j++] = nums[i];
+
+            } else {
+                nums1[k++] = nums[i];
+
             }
-            // int i=0;
-            // j=0;
-            // k=0;
+        }
 
-            for(int i=0;i<size/2;i++){
-                nums[2*i] = nums2[i];
-                nums[2*i+1] = nums1[i];
-            }
-
-            // while(i<nums1.length && j<nums2.length){
-            //     nums[k++] =nums2[i++];
-            //     nums[k++] = nums1[j++];
-            // }
+        for (int i = 0; i < size / 2; i++) {
+            nums[2 * i] = nums2[i];
+            nums[2 * i + 1] = nums1[i];
+        }
 
         return nums;
-            
+
+    }
+
+    public static int[] rearrangeArrayOptimal(int[] nums) {
+
+        int size = nums.length;
+        int[] arr = new int[size];
+
+        for (int i = 0; i < size; i++) {
+            if (nums[i] > 0) {
+                arr[2 * i] = nums[i];
+            } else {
+                arr[2 * i + 1] = nums[i];
+            }
         }
 
+        return arr;
+    }
 
+    public static int minElement(int[] arr) {
 
-        public static int[] rearrangeArrayOptimal(int[] nums) {
-            
-            int size = nums.length;
-            int[] arr  = new int[size];
+        int min = Integer.MAX_VALUE;
+        int size = arr.length;
+        for (int i = 0; i < size; i++) {
+            if (arr[i] < min) {
+                min = arr[i];
+            }
+        }
+        return min;
 
-            for(int i=0;i<size;i++){
-                if(nums[i]>0){
-                    arr[2*i] = nums[i];
-                }
-                else{
-                    arr[2*i+1] = nums[i];
+    }
+
+    public static int maxElement(int[] arr) {
+
+        int max = Integer.MIN_VALUE;
+        int size = arr.length;
+        for (int i = 0; i < size; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+
+        return max;
+
+    }
+
+    public static int average(int a, int b) {
+
+        int averageNumber = (a + b) / 2;
+        return averageNumber;
+
+    }
+
+    // public static int[] removeMinMax(int[] a,int[] b,int max,int min){
+
+    // int size = a.length;
+
+    // for(int i=0;i<size;i++){
+    // if(a[i]!=min && a[i]!=max){
+    // b[i] = a[i];
+    // }
+    // }
+
+    // }
+
+    public static int[] addAverage(int[] a, int[] b) {
+
+        for (int i = 0; i < a.length; i++) {
+            int av = average(minElement(a), maxElement(a));
+            if (av != minElement(a) && av != maxElement(a))
+                ;
+            b[i] = av;
+
+        }
+
+        return b;
+    }
+
+    public static int minAverage(int[] arr) {
+
+        List<Integer> list = new ArrayList<>();
+        for (int i : arr) {
+            list.add(i);
+        }
+
+        Collections.sort(list);
+
+        int i = 0;
+        int j = list.size() - 1;
+        List<Integer> averageList = new ArrayList<>();
+
+        while (i < j) {
+            int min = Collections.min(list);
+            int max = Collections.max(list);
+            int av = (min + max) / 2;
+            averageList.add(av);
+
+            list.remove(i);
+            list.remove(j);
+            i++;
+            j--;
+        }
+
+        return Collections.min(averageList);
+    }
+
+    // public static int[] ave(int[] arr){
+
+    // int size = arr.length;
+
+    // int[] a = new int[size];
+    // int i=0;
+
+    // return a;
+
+    // }
+
+    // public int[] twoSum(int[] nums, int target) {
+
+    // int sum = 0;
+    // int size = nums.length;
+    // for(int i=0;i<size;i++){
+
+    // }
+
+    // }
+
+    public static int nCr(int c, int r) {
+
+        if (r > c - r) {
+            r = c - r;
+        }
+        if (c == 1 || r == 1) {
+            return 1;
+        }
+
+        int result = 1;
+        for (int i = 0; i < r; i++) {
+
+            result *= (c - 1);
+            result /= (i + 1);
+        }
+
+        return result;
+    }
+
+    public static int[] twoSum(int[] nums, int target) {
+
+        Map<Integer, Integer> mpp = new HashMap<>();
+        int n = nums.length;
+
+        for (int i = 0; i < n; i++) {
+
+            int num = nums[i];
+            int moreNeeded = target - num;
+
+            if (mpp.containsKey(moreNeeded)) {
+                return new int[] { mpp.get(moreNeeded), i };
+            }
+            mpp.put(num, i);
+        }
+        return new int[] { -1, -1 };
+    }
+
+    public static int search(int[] nums, int target) {
+
+        int l = 0;
+        int r = nums.length - 1;
+
+        while (l <= r) {
+            int mid = (l + r) / 2;
+
+            if (nums[mid] == target) {
+                return nums[mid];
+            } else if (nums[mid] > target) {
+                r = mid - 1;
+            } else {
+                l = mid + 1;
+            }
+
+        }
+        return -1;
+
+    }
+
+    public static int searchInsert(int[] nums, int target) {
+
+        int size = nums.length;
+        for (int i = 0; i < size; i++) {
+            if (nums[i] >= target) {
+                return i;
+            }
+        }
+        return size;
+
+    }
+
+    public static int[] getFloorAndCeil(int[] nums, int x) {
+
+        int ceil = -1;
+        int floor = -1;
+        int size = nums.length;
+
+        for (int i = 0; i < size; i++) {
+
+            if (nums[i] <= x) {
+                floor = nums[i];
+                if (floor > x) {
+                    break;
                 }
             }
 
-
-            return arr;
-        }
-
-
-        public static int minElement(int[] arr){
-
-            int min = Integer.MAX_VALUE;
-            int size = arr.length;
-            for(int i=0;i<size;i++){
-                    if(arr[i]<min){
-                        min = arr[i];
-                    }
+            if (nums[i] >= x) {
+                ceil = nums[i];
+                if (ceil >= x) {
+                    break;
                 }
-                return min;
-    
+            }
         }
+        // ll.add(floor);
+        // ll.add(ceil);
+        // System.out.println(ll.get(0));
+        // System.out.println(ll.get(1));
+        System.out.println(floor + "floor");
+        System.out.println(ceil + "ceil");
 
+        return new int[] { floor, ceil };
 
-        public static int maxElement(int[] arr){
+    }
 
-            int max = Integer.MIN_VALUE;
-            int size = arr.length;
-            for(int i=0;i<size;i++){
-                    if(arr[i]>max){
-                        max = arr[i];
-                    } 
+    /**
+     * Given an array of integers nums sorted in non-decreasing order, find the
+     * starting and ending position of a given target value.
+     * If the target is not found in the array, return [-1, -1].
+     * nput: nums = [5, 7, 7, 8, 8, 10], target = 8
+     * Output: [3, 4]
+     * Explanation:The target is 8, and it appears in the array at indices 3 and 4,
+     * so the output is [3,4]
+     */
+
+    public int[] searchRange(int[] nums, int target) {
+
+        int size = nums.length;
+        int first = -1;
+        int last = -1;
+        int[] arr = new int[2];
+        for (int i = 0; i < size; i++) {
+            if (nums[i] == target) {
+                if (first == -1) {
+                    first = i;
                 }
-
-            return max;
-
-        }
-
-
-        public static int average(int a,int b){
-
-            int averageNumber =(a+b)/2;
-            return averageNumber;
-
-        }
-
-        // public static int[] removeMinMax(int[] a,int[] b,int max,int min){
-
-        //     int size = a.length;
-            
-        //     for(int i=0;i<size;i++){
-        //         if(a[i]!=min && a[i]!=max){
-        //             b[i] = a[i];
-        //         }
-        //     }
-
-        // }
-
-        public static int[] addAverage(int[] a,int[] b){
-
-            for(int i=0;i<a.length;i++){
-                int av=average(minElement(a), maxElement(a));
-                if(av!=minElement(a) && av!=maxElement(a));
-                b[i] =av;
-               
+                last = i;
             }
-
-            return b;
         }
+        arr[0] = first;
+        arr[1] = last;
 
+        return new int[] { first, last };
 
-        public static int minAverage(int[] arr){
-
-
-            List<Integer> list = new ArrayList<>();
-            for(int i : arr){
-                list.add(i);
-            }
-
-
-            Collections.sort(list);
-
-            int i=0;
-            int j=list.size()-1;
-            List<Integer> averageList = new ArrayList<>();
-
-            while (i<j) {
-                int min = Collections.min(list);
-                int max = Collections.max(list);
-                int av = (min+max)/2;
-                averageList.add(av);
-                
-                list.remove(i);
-                list.remove(j);
-                i++;
-                j--;
-            }
-
-
-
-            return Collections.min(averageList);
-        }
-
-
-        // public static int[] ave(int[] arr){
-
-            
-        //     int size = arr.length;
-
-        //     int[] a = new int[size];
-        //     int i=0;
-            
-            
-        //     return a;
-
-   
-        // }
-
-
-
-
-        // public int[] twoSum(int[] nums, int target) {
-
-        //     int sum  = 0;
-        //     int size = nums.length;
-        //     for(int i=0;i<size;i++){
-
-        //     }
-        
-        // }
+    }
 
     public static void main(String[] args) {
 
         int n = 4;
+        int r = 2;
         int m = 12345;
-        int[] arr = { 4, 8, 7, 5 };
+        int[] arr = { 2, 4, 6, 8, 10, 12, 14 };
+        int[] resultArray = getFloorAndCeil(arr, 1);
+        System.out.println(resultArray[0] + "            " + resultArray[1]);
+        int ln = arr.length;
         int[] nums1 = { 1, 2, 3, 5, 17 };
-        int[] nums2 = {7,8,3,4,15,13,4,1 };
+        int[] nums2 = { 7, 8, 3, 4, 15, 13, 4, 1 };
         int n1 = nums1.length;
         int n2 = nums2.length;
         int[] arr3 = new int[n2];
         int[] nums3 = new int[n1 + n2];
 
-        int[] nums = {2, 4, 5, -1, -3, -4};
+        int[] nums = { 2, 4, 5, -1, -3, -4 };
 
         // int n2 = nums2.length;
         // int n1 = nums1.length - n2;
@@ -1412,7 +1526,8 @@ public class BasicQuestions {
         // System.out.println(findMaxConsecutiveOnes(nums));
         // printArry(nums3, nums3.length);
         // rotateArrayByOne(nums);
-        // moveZeroes(nums);
+        // moveZeroes(arr);
+        // printArry(arr, ln);
         // System.out.println(removeDuplicates(nums));
         // unionArray(nums1, nums2,nums3);
         // intersectionArray(nums1, nums2, nums3);
@@ -1423,15 +1538,14 @@ public class BasicQuestions {
         // System.out.println(dominantIndex(nums));
         // System.out.println(Arrays.toString(rearrangeArrayOptimal(nums)));
 
+        // minAverage(nums2);
 
-        minAverage(nums2);
-
-        System.out.println(Arrays.toString(nums2));
+        // System.out.println(Arrays.toString(nums2));
 
         // System.out.println(maxElement(arr3));
-        System.out.println(minElement(nums2));
+        // System.out.println(minElement(nums2));
 
-
+        // System.out.println(nCr(n-1, r-1));
 
     }
 
