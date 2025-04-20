@@ -1444,6 +1444,48 @@ public class BasicQuestions {
 
     }
 
+
+    // public List<String> generateParenthesis(int n) {
+        
+    //     for(int i=0;i<n;i++){
+            
+    //     }
+    // }
+
+    // public List<List<Integer>> powerSet(int[] nums) {
+        
+    // }
+
+    class ListNode {
+        int val; 
+        ListNode next; 
+        ListNode(int data1) {
+            val = data1;
+            next = null;
+        }
+    
+        ListNode(int data1, ListNode next1) {
+            val = data1;
+            next = next1;
+        }
+    }
+
+    public List<Integer> LLTraversal(ListNode head) {
+
+        ListNode tmp = head;
+        List<Integer> ans = new ArrayList<>();
+
+        while(tmp!=null){
+            ans.add(tmp.val);
+            tmp = tmp.next;
+        }
+
+        return ans;
+
+    }
+
+    
+
     public static void main(String[] args) {
 
         int n = 4;
