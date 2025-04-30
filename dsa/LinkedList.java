@@ -35,8 +35,6 @@ public class LinkedList {
 
     public ListNode deleteHeadNode(ListNode head) {
 
-        // return head != null ? head.next : null;
-
         if (head != null) {
             return head.next;
         }
@@ -47,43 +45,140 @@ public class LinkedList {
     public ListNode deleteTail(ListNode head) {
 
         ListNode tmp = head;
-        ListNode tail = head;
+        ListNode tail = null;
 
         if (head == null || head.next == null) {
             return null;
         }
+        while (tmp.next != null) {
 
-        while (tmp != null) {
-
+            tail = tmp;
             tmp = tmp.next;
 
-            if (tmp != null) {
-                tail = tail.next;
-            }
-
         }
-
-        return tail;
-
+        tail.next = null;
+        return head;
     }
 
     public ListNode deleteKthNode(ListNode head, int k) {
 
-        ListNode tmp = head;
-        ListNode tail = null;
-        int count = 0;
-        while(tmp!=null){
-            tail = tail.next;
-            count++;
-            tmp = tmp.next;
-            if(count==k){
+        if (head == null || k <= 0)
+            return head;
+
+        // If k is 1, delete the head node
+        if (k == 1) {
+            ListNode temp = head;
+            head = head.next;
+            temp.next = null; // help GC
+            return head;
+        }
+
+        ListNode p = head;
+        ListNode q = null;
+        for (int i = 1; i < k && p != null; i++) {
+            q = p;
+            p = p.next;
+        }
+
+        if (p != null && q!=null) {
+            q.next = p.next;
+            p.next = null;
+        }
+        return head;
+
+    }
+
+    public ListNode deleteNodeWithValueX(ListNode head, int X) {
+
+        if(head == null || X ==1){
+            return null;
+        }
+
+        ListNode p = head;
+        ListNode q = null;
+        while(p!=null){
+            if(p.val == X){
                 break;
             }
+            q = q.next;
+            p = p.next;
         }
-        tail = tmp.next;
-        tmp = tmp.next;
 
-        return tmp;
+        if(p!=null && q!=null){
+            q.next = p.next;
+            p.next = null;
+        }
+        
+        return head;
+
+    }
+
+    // 
+    public ListNode insertAtHead(ListNode head, int X) {
+        ListNode tmp= new ListNode(X);
+        tmp.next = head;
+        head = tmp;
+        return head;
+
+
+    }
+
+    // if you want to insert at tail you need one pointer which give us the index of tail
+    public ListNode insertAtTail(ListNode head, int X) {
+
+        ListNode p = new ListNode(X);
+        ListNode tmp = head;
+        while(tmp !=null){
+            tmp = tmp.next;
+        }
+        tmp.next = p;
+        p.next = null;
+        return head;
+
+    }
+
+    public ListNode insertAtKthPosition(ListNode head, int X, int K) {
+
+        ListNode p = new ListNode(X);
+        if (K == 1) {
+            p.next = head;
+            return p;
+        }
+        
+        if (head == null) {
+            return null;
+        }
+        ListNode tmp = head;
+        for(int i=1;i<K-1;i++){
+            tmp = tmp.next;
+        }
+        tmp.next = p;
+        p.next = tmp.next;
+        
+
+        return head;
+    }
+
+    public ListNode insertBeforeX(ListNode head, int X, int val) {
+
+        if(head==null){
+            return null;
+        }
+        if(head.val == X){
+            return new ListNode(val,head);
+        }
+        ListNode p = head;
+        ListNode q = null;
+        ListNode tmp = new ListNode(val);
+        
+        while(p!=null || p.val!=val){
+            q = p;
+            p = p.next;
+        }
+        tmp.next =q.next;
+        q.next = tmp;
+
+        return head;
 
     }
 
@@ -103,12 +198,12 @@ public class LinkedList {
 
         // System.out.println("Linked List Values:");
         // for (int val : result) {
-        //     System.out.print(val + " ");
+        // System.out.print(val + " ");
         // }
         // System.out.println();
 
         LinkedList ll = new LinkedList(); // Create an instance to call non-static method
-        ListNode newHead = ll.deleteKthNode(y1,2); // Remove the head
+        ListNode newHead = ll.deleteKthNode(y1, 2); // Remove the head
 
         System.out.println("Linked List after deleting head:");
         while (newHead != null) {
