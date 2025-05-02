@@ -7,6 +7,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 import java.util.Vector;
 
 public class BasicQuestions {
@@ -1482,6 +1483,24 @@ public class BasicQuestions {
 
         return ans;
 
+    }
+
+    static boolean isBalanced(String s) {
+        // code here
+        Stack<Character> st = new Stack<>();
+        int size = s.length();
+        for(int i=0;i<size;i++){
+            if(s.charAt(i) == '{' || s.charAt(i) == '(' || s.charAt(i) == '['){
+                st.push(s.charAt(i));
+            }
+            else{
+                char top = st.pop();
+                if(s.charAt(i)=='}' && top !='{' || s.charAt(i)==']' && top !='[' || s.charAt(i)==')' && top !='('){
+                    return false;
+                }
+            }
+        }
+        return st.isEmpty();
     }
 
     
