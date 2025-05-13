@@ -12,6 +12,7 @@ import java.util.Vector;
 
 public class BasicQuestions {
 
+    // You are given an integer n. You need to return the number of digits in the number.
     public static int countDigit(int n) {
 
         int count = 0;
@@ -25,6 +26,7 @@ public class BasicQuestions {
 
     }
 
+    // You are given an integer n. Return the integer formed by placing the digits of n in reverse order.
     public static int reverseNumber(int n) {
 
         if (n < 10) {
@@ -43,6 +45,8 @@ public class BasicQuestions {
 
     }
 
+    // You are given an integer n. You need to check whether the number is a palindrome number or not.
+    // Return true if it's a palindrome number, otherwise return false.
     public static boolean isPalindrome(int n) {
 
         int copy = n;
@@ -72,6 +76,7 @@ public class BasicQuestions {
 
         // An armstrong number is a number which is equal to the sum of the digits of
         // the number, raised to the power of the number of digits.
+        // This is only for three digit number .
         int copy = n;
         int arms = 0;
         while (n != 0) {
@@ -82,6 +87,22 @@ public class BasicQuestions {
 
         return arms == copy;
 
+    }
+
+    public static boolean isArmstrongOptimal(int n) {
+        int numDigits = String.valueOf(n).length();
+        int sum = 0;
+        int copy = n;
+
+
+    
+        while (n != 0) {
+            int digit = n % 10;
+            sum += Math.pow(digit, numDigits);
+            n /= 10;
+        }
+    
+        return sum == copy;
     }
 
     public static boolean isPerfect(int n) {
@@ -155,6 +176,14 @@ public class BasicQuestions {
         }
         return gcd;
 
+    }
+
+    // Using Euclidean Algorithm (Recursive)
+    public static int gcdRecursive(int a, int b) {
+        if (b == 0) {
+            return a;
+        }
+        return gcdRecursive(b, a % b);
     }
 
     public int gcd(int n1, int n2) {
@@ -401,7 +430,6 @@ public class BasicQuestions {
             j--;
         }
         return true;
-
     }
 
     public static boolean isStringPalindrome(String s) {
@@ -415,7 +443,6 @@ public class BasicQuestions {
         } else {
             return false;
         }
-
     }
 
     public static String largeOddNum(String s) {
@@ -436,11 +463,8 @@ public class BasicQuestions {
 
         int i = 0;
         while (i <= lastOddIndex && s.charAt(i) == '0') {
-            // this loop removes leading zeros.
             i++;
-
         }
-
         return s.substring(i, lastOddIndex + 1);
 
     }
@@ -500,6 +524,28 @@ public class BasicQuestions {
         }
         return true;
     }
+
+    public boolean anagramStringsOptimal(String s, String t) {
+        if (s.length() != t.length()) {
+            return false;
+        }
+
+        int[] count = new int[26];
+
+        for (char c : s.toCharArray()) {
+            count[c - 'a']++;
+        }
+        for (char c : t.toCharArray()) {
+            count[c - 'a']--;
+        }
+        for (int i : count) {
+            if (i != 0) {
+                return false;
+            }
+
+        }
+        return true;
+    }   
 
     public static int numbersSum(int N) {
 
@@ -646,6 +692,21 @@ public class BasicQuestions {
         }
         return addDigitsRecursive(sum);
 
+    }
+    public int addDigits(int num) {
+        
+        while(num>=10){
+            int sum = 0;
+            
+            while (num>0) {
+            sum += num%10;
+            num = num/10;
+                
+            }
+            num = sum;
+            
+        }
+        return num;
     }
 
     public static int addDigit(int num) {
