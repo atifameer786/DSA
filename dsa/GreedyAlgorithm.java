@@ -3,7 +3,7 @@ import java.util.Arrays;
 public class GreedyAlgorithm {
 
 
-    public int findMaximumCookieStudents(int[] Student, int[] Cookie) {
+    public static int findMaximumCookieStudents(int[] Student, int[] Cookie) {
         
         Arrays.sort(Student);
         Arrays.sort(Cookie);
@@ -74,6 +74,11 @@ public class GreedyAlgorithm {
     public static void main(String[] args) {
 
         int[] nums = {5, 5, 10, 5, 20};
+        int[] Student = {1,2,3};
+        int[] Cookie = {1,1};
+
+
+        System.out.println(findMaximumCookieStudents(Student, Cookie));
 
         System.out.println(lemonadeChange(nums));
 

@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.Vector;
 
-public class BasicQuestions  {
+public class j {
 
     // You are given an integer n. You need to return the number of digits in the number.
     public static int countDigit(int n) {
@@ -1520,7 +1520,8 @@ public class BasicQuestions  {
         // ll.add(ceil);
         // System.out.println(ll.get(0));
         // System.out.println(ll.get(1));
-        
+        System.out.println(floor + "floor");
+        System.out.println(ceil + "ceil");
 
         return new int[] { floor, ceil };
 
@@ -1624,7 +1625,7 @@ public class BasicQuestions  {
         int m = 12345;
         int[] arr = { 2, 4, 6, 8, 10, 12, 14 };
         int[] resultArray = getFloorAndCeil(arr, 1);
-        // System.out.println(resultArray[0] + "            " + resultArray[1]);
+        System.out.println(resultArray[0] + "            " + resultArray[1]);
         int ln = arr.length;
         int[] nums1 = { 1, 2, 3, 5, 17 };
         int[] nums2 = { 7, 8, 3, 4, 15, 13, 4, 1 };
@@ -1709,7 +1710,7 @@ public class BasicQuestions  {
         // printArry(nums3, nums3.length);
 
         // System.out.println(dominantIndex(nums));
-        System.out.println(Arrays.toString(rearrangeArrayOptimal(nums)));
+        // System.out.println(Arrays.toString(rearrangeArrayOptimal(nums)));
 
         // minAverage(nums2);
 

@@ -66,30 +66,41 @@ public class BinarySearch {
         return l; // Position of first element > key
     }
 
+    public int[] getFloorAndCeilOptimal(int[] nums, int x) {
+
+        int lb = lowerBound(nums, x);
+        int ub = upperBound(nums, x);
+
+        int floor = (lb > 0) ? nums[lb - 1] : -1;
+        int ceil = (lb < nums.length) ? nums[lb] : -1;
+
+        return new int[] { floor, ceil };
+
+    }
+
     public boolean searchInARotatedSortedArrayII(ArrayList<Integer> nums, int k) {
 
         int n = nums.size();
-        for(int i=0;i<n;i++){
-            if(nums.get(i)==k){
+        for (int i = 0; i < n; i++) {
+            if (nums.get(i) == k) {
                 return true;
             }
         }
         return false;
-      
-    }
 
+    }
 
     public int findMin(ArrayList<Integer> arr) {
 
         int min = Integer.MAX_VALUE;
         int n = arr.size();
-        for(int i=0;i<n;i++){
-            if(arr.get(i)<min){
+        for (int i = 0; i < n; i++) {
+            if (arr.get(i) < min) {
                 min = arr.get(i);
             }
         }
         return min;
-      
+
     }
 
     public int findMinOptimal(ArrayList<Integer> arr) {
@@ -97,99 +108,96 @@ public class BinarySearch {
         int min = Integer.MAX_VALUE;
         int n = arr.size();
         int l = 0;
-        int h = n-1;
-        while(l<=h){
-            int mid = l +(h-l)/2;
+        int h = n - 1;
+        while (l <= h) {
+            int mid = l + (h - l) / 2;
 
-            if(arr.get(l)<=arr.get(mid)){
-                // left part is remove from searching portion 
-                 min = Math.min(min, arr.get(l));
-                 l = mid+1;
-            }
-            else{
+            if (arr.get(l) <= arr.get(mid)) {
+                // left part is remove from searching portion
+                min = Math.min(min, arr.get(l));
+                l = mid + 1;
+            } else {
                 // right part is remove from searching portion
                 min = Math.min(min, arr.get(mid));
-                h = mid-1;
+                h = mid - 1;
             }
         }
         return min;
-      
+
     }
 
     public int findKRotation(ArrayList<Integer> nums) {
         int n = nums.size();
         int index = -1;
         int ans = Integer.MAX_VALUE;
-        for(int i=0;i<n;i++){
-            if(nums.get(i)<ans){
+        for (int i = 0; i < n; i++) {
+            if (nums.get(i) < ans) {
                 ans = nums.get(i);
                 index = i;
             }
         }
-    return index;
+        return index;
     }
 
-
     public int findKRotationOptimal(ArrayList<Integer> nums) {
-        // just find the index of min value in the entire array 
+        // just find the index of min value in the entire array
         int ans = Integer.MAX_VALUE;
         int n = nums.size();
         int l = 0;
-        int h = n-1;
-        while(l<=h){
-            int mid = l +(h-l)/2;
-            if(nums.get(l)<=nums.get(h)){
-                ans = Math.min(ans,nums.get(l));
+        int h = n - 1;
+        while (l <= h) {
+            int mid = l + (h - l) / 2;
+            if (nums.get(l) <= nums.get(h)) {
+                ans = Math.min(ans, nums.get(l));
                 break;
             }
-            if(nums.get(l)<=nums.get(mid)){
-                 ans = Math.min(ans, nums.get(l));
-                 l = mid+1;
-            }
-            else{
+            if (nums.get(l) <= nums.get(mid)) {
+                ans = Math.min(ans, nums.get(l));
+                l = mid + 1;
+            } else {
                 ans = Math.min(ans, nums.get(mid));
-                h = mid-1;
+                h = mid - 1;
             }
         }
-        return nums.indexOf(ans); 
+        return nums.indexOf(ans);
     }
 
     public int singleNonDuplicate(int[] nums) {
 
         int n = nums.length;
         int count = -1;
-        for(int i=1;i<n;i++){
-            if(nums[i]!=nums[i-1] && nums[i]!=nums[i+1]){
+        for (int i = 1; i < n; i++) {
+            if (nums[i] != nums[i - 1] && nums[i] != nums[i + 1]) {
                 count = nums[i];
                 return nums[i];
             }
         }
 
         return count;
-      
-    }
 
+    }
 
     public static double myPow(double x, int n) {
 
         double pow = 1;
-        if (n == 0 || x == 1.0) return 1; 
-        for(int i=0;i<n;i++){
-            pow *=x;
+        if (n == 0 || x == 1.0)
+            return 1;
+        for (int i = 0; i < n; i++) {
+            pow *= x;
         }
         return pow;
-       
-  }
 
-  public static double myPowRecursive(double x, int n) {
+    }
 
-    double pow = 1;
-        if (n == 0 || x == 1.0) return 1; 
+    public static double myPowRecursive(double x, int n) {
 
-        return myPow(x, n-1)*x;
-   
-   
-}
+        double pow = 1;
+        if (n == 0 || x == 1.0)
+            return 1;
+
+        return myPow(x, n - 1) * x;
+
+    }
 
     public static void main(String[] args) {
         BinarySearch bs = new BinarySearch();
@@ -210,9 +218,8 @@ public class BinarySearch {
         System.out.println("Upper Bound: " + upperBound(arr, key));
 
         int x = 2;
-        int n= 10;
+        int n = 10;
         System.out.println(myPowRecursive(x, n));
-
 
     }
 

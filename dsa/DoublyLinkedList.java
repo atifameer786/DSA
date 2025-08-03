@@ -67,7 +67,7 @@ public class DoublyLinkedList {
 
     }
 
-    public ListNode deleteKthElement(ListNode head, int k) {
+    public static ListNode deleteKthElement(ListNode head, int k) {
 
         if (head == null || k < 1) {
             return head; // Nothing to delete
@@ -80,21 +80,23 @@ public class DoublyLinkedList {
             }
             return head;
         }
-
+        ListNode q= null;
         ListNode p = head;
         for (int i = 1; i < k; i++) {
+            q = p ;
             p = p.next;
             if (p == null) {
                 // k is out of bounds
                 return head;
             }
         }
-        if (p.prev != null) {
-            p.prev.next = p.next;
-        }
-        if (p.next != null) {
-            p.next.prev = p.prev;
-        }
+        
+            q.next = p.next;
+            if(p.next!=null){
+                p.next.prev = q;
+            }
+            
+        
 
         return head;
 
@@ -118,6 +120,9 @@ public class DoublyLinkedList {
         node.prev = null;
 
     }
+
+
+
 
     public ListNode insertBeforeTail(ListNode head, int X) {
 
@@ -145,6 +150,18 @@ public class DoublyLinkedList {
         tmp.prev = q;
 
         return head;
+
+    }
+
+
+    public static void deleteGivenNodeO(ListNode node) {
+
+            ListNode q = node.prev;
+            ListNode p = node.next;
+
+            q.next = p;
+            p.prev = q;
+
 
     }
 
@@ -201,9 +218,9 @@ public class DoublyLinkedList {
         ListNode prev = head;
 
         for (int i = 1; i < nums.length; i++) {
-            ListNode temp = new ListNode(nums[i]);
+            ListNode temp = new ListNode(nums[i],prev,null);
             prev.next = temp;
-            temp.prev = prev; // ✅ properly link backward
+            // temp.prev = prev; // ✅ properly link backward
             prev = temp;
         }
 
@@ -235,7 +252,10 @@ public class DoublyLinkedList {
         // Create an instance of Solution class
 
         // Function call to delete the tail of the doubly linked list
-        head = deleteTail(head);
+        // head = deleteTail(head);
+        // head = deleteKthElement(head,2);
+        
+        deleteGivenNodeO(head);
 
         // Print the Modified list
         System.out.print("Modified list: ");

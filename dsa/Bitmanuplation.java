@@ -252,13 +252,13 @@ public class Bitmanuplation {
     public static void main(String[] args) {
 
         String s = "1101";
-        int num = 83;
+        int num = 13;
         int[] nums = {2, 2, 2, 3};
         // System.out.println(binaryToDecimal(s));
-        // System.out.println(decimaltoBinary(num));
+        System.out.println(decimaltoBinary(num));
 
         // System.out.println(countSetBit(num));
-        System.out.println(singleNumberThriceBetter(nums));
+        // System.out.println(singleNumberThriceBetter(nums));
 
     }
 
