@@ -562,6 +562,68 @@ public class LinkedList {
         
     }
 
+    public ListNode removeNthFromEndLeetCode(ListNode head, int n) {
+
+        ListNode tmp = head;
+        int size = 0;
+        while(tmp !=null){
+            size++;
+            tmp = tmp.next;
+        }
+
+        int k = size-n;
+        if(size==n){
+            return head.next;
+        }
+        
+        int i=0;
+        ListNode q = null;
+        ListNode p = head;
+        while(tmp!=null && i<k){
+            i++;
+            q = p ;
+            p = p.next;
+        }
+
+        q.next = p.next;
+        p.next = null;
+
+        return head;
+
+
+    }
+
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+
+        ListNode a = head;
+        for(int i=1;i<left;i++){
+            a= a.next;
+        }
+        ListNode b = a.next;
+        
+        ListNode c = head;
+        for(int j=1;j<=right;j++){
+            c = c.next;
+        }
+        ListNode d = c.next;
+
+        ListNode q = a;
+        ListNode p = b;
+        
+        while(p!=c){
+            ListNode nextNode = p.next;
+            p.next = q;
+            q = p ;
+            p = nextNode;
+        }
+        b.next = d.next;
+        a.next = d;
+
+        return head;
+
+        
+    }
+
     public static void main(String[] args) {
 
         ListNode y1 = new ListNode(1);

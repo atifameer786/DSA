@@ -1285,12 +1285,15 @@ public class BasicQuestions  {
         return arr;
     }
 
+
+
     public static int minElement(int[] arr) {
 
         int min = Integer.MAX_VALUE;
         int size = arr.length;
         for (int i = 0; i < size; i++) {
             if (arr[i] < min) {
+                
                 min = arr[i];
             }
         }
@@ -1613,6 +1616,34 @@ public class BasicQuestions  {
             }
         }
         return st.isEmpty();
+    }
+
+    public int longestOnes(int[] arr, int k){
+        int l = 0;
+        int ones = 0;
+        int zeros = 0;
+        int maxLen = 0;
+        for(int r=0;r<arr.length;r++){
+
+            if(arr[r]==1){
+                ones++;
+            }
+            else if(arr[r]==0){
+                if(zeros<=k){
+                    ones++;
+                    zeros++;
+                }
+                while(zeros>k){
+                    if(arr[l]==0){
+                        zeros--;
+                        l++;
+                    }
+                }
+                maxLen = max(maxLen, r-l+1);
+            }
+        }
+
+        return maxLen;
     }
 
     

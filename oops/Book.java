@@ -16,20 +16,17 @@ public class Book {
     }
 
 
-    public String borrowBook(String bookName){
+    // public String borrowBook(String bookName){
 
-        if(bookName){
+       
+    // }
 
-        }
+    // public String  returnBook(String bookName){
 
-    }
+    // }
 
-    public String  returnBook(String bookName){
-
-    }
-
-    public String getAvailability(String bookName){
+    // public String getAvailability(String bookName){
         
-    }
+    // }
     
 }

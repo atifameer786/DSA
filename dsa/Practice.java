@@ -1613,20 +1613,15 @@ public class Practice {
 
     public static int maxSubArray(int[] nums) {
 
-        List<List<Integer>> tmp = new ArrayList<>();
-
         int n = nums.length;
         int maxsum = Integer.MIN_VALUE;
 
         for (int i = 0; i < n; i++) {
             int sum = 0;
-            List<Integer> subarray = new ArrayList<>();
+
             for (int j = i; j < n; j++) {
                 sum += nums[j];
-                if (maxsum < sum) {
-                    maxsum = sum;
-                }
-
+                maxsum = Math.max(sum, maxsum);
             }
         }
 
@@ -1833,6 +1828,27 @@ public class Practice {
         arr[0] = x;
         arr[1] = y;
         return arr;
+
+    }
+
+    public static int maxProduct(int[] nums) {
+
+        int maxProduct = Integer.MIN_VALUE;
+
+        for (int i = 0; i < nums.length; i++) {
+
+            for (int j = i; j < nums.length; j++) {
+                int product = 1;
+                for (int k = i; k <= j; k++) {
+                    product *= nums[k];
+                }
+                maxProduct = Math.max(maxProduct, product);
+
+            }
+
+        }
+
+        return maxProduct;
 
     }
 
@@ -2096,57 +2112,130 @@ public class Practice {
         return maxlen;
     }
 
+    public static int kDistinctChar(String s, int k) {
 
-     public static int kDistinctChar(String s, int k) {
-       
         int size = s.length();
         int maxlen = 0;
         int l = 0;
         int r;
-        Map<Character,Integer> seen = new HashMap<>();
+        Map<Character, Integer> seen = new HashMap<>();
 
-        for(r =0;r<size;r++){
+        for (r = 0; r < size; r++) {
             char ch = s.charAt(r);
-           seen.put(ch, seen.getOrDefault(ch,0)+1);
-            while(seen.size()>k){
+            seen.put(ch, seen.getOrDefault(ch, 0) + 1);
+            while (seen.size() > k) {
                 char cl = s.charAt(l);
-                seen.put(cl,seen.getOrDefault(cl,0)-1);
-                if(seen.get(cl)==0){
+                seen.put(cl, seen.getOrDefault(cl, 0) - 1);
+                if (seen.get(cl) == 0) {
                     seen.remove(cl);
                 }
-                
+
                 l++;
             }
-            maxlen = Math.max(maxlen,r-l+1);
-            
+            maxlen = Math.max(maxlen, r - l + 1);
+
         }
         return maxlen;
     }
 
     public static int kDistinctCharOptimal(String s, int k) {
-       
+
         Set<Character> seen = new HashSet<>();
         int left = 0, maxLength = 0;
 
-    for (int right = 0; right < s.length(); right++) {
-        char currentChar = s.charAt(right);
+        for (int right = 0; right < s.length(); right++) {
+            char currentChar = s.charAt(right);
 
-        if(seen.size()>k){
-            while (seen.contains(currentChar)) {
-            seen.remove(s.charAt(left));
-            left++;
+            if (seen.size() > k) {
+                while (seen.contains(currentChar)) {
+                    seen.remove(s.charAt(left));
+                    left++;
+                }
+
+            }
+
+            seen.add(currentChar);
+            maxLength = Math.max(maxLength, right - left + 1);
         }
 
-        }
-        
-        seen.add(currentChar);
-        maxLength = Math.max(maxLength, right - left + 1);
+        return maxLength;
     }
 
-    return maxLength;
+    public static int singleNonDuplicate(int[] nums) {
+
+        int size = nums.length;
+
+        for (int i = 1; i < size; i++) {
+            if (i == 0) {
+                if (nums[i] != nums[i + 1])
+                    return nums[i];
+            } else if (i == size - 1) {
+                if (nums[i] != nums[i - 1]) {
+                    return nums[i];
+                }
+            } else {
+                if (nums[i] != nums[i - 1] && nums[i] != nums[i + 1]) {
+                    return nums[i];
+                }
+
+            }
+            i++;
+        }
+
+        return -1;
+
+    }
+
+
+
+    public static int[] recoverOrder(int[] order, int[] friends) {
+        Set<Integer> set = new HashSet<>();
+        
+        for(int f:friends){
+            set.add(f);
+        }
+        int n = order.length;
+        int[] result = new int[friends.length];
+        int j=0;
+        for(int i=0;i<n;i++){
+            if(set.contains(order[i])){
+                result[j] = order[i];
+                j++;
+            }
+        }
+        return result;
+        
+    }
+    public int getLeastFrequentDigit(int n) {
+        Map<Integer,Integer> map = new HashMap<>();
+
+        while(n!=0){
+            int m = n%10;
+            map.put(m, map.getOrDefault(m,0)+1);
+            n = n/10;
+        }
+        
+        
+        int minFreq = Integer.MAX_VALUE;
+        int result = 9;
+
+        for(Map.Entry<Integer,Integer> e : map.entrySet()){
+            int digit = e.getKey();
+            int freq = e.getValue();
+            if(freq<minFreq || (freq==minFreq && digit<result)){
+                freq = minFreq;
+                result = digit;
+            }
+            
+        }
+        return result;
+        
     }
 
     public static void main(String[] args) {
+        int[] order={3,1,2,5,4};
+        int[] friend={1,3,4};
+        System.out.println(Arrays.toString(recoverOrder(order, friend)));
         int n = 11291237;
         int primeN = 15;
         int fibN = 6;
@@ -2194,7 +2283,10 @@ public class Practice {
         int[] majorityElementTwo = { 1, 2, 1, 1, 3, 2, 2 };
         int[] missingAndReapeting = { 6, 5, 7, 1, 8, 6, 4, 3, 2 };
         int[] smallestDivisor = { 8, 4, 2, 3 };
-        String distictChar = "aababbcaacc";       // System.out.println(isPalindrome(n));
+        String distictChar = "aababbcaacc"; // System.out.println(isPalindrome(n));
+        int[] maxProduct = { 4, 5, 3, 7, 1, 2 };
+        int[] singleNonDuplicate = { 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7 };
+        // System.out.println(singleNonDuplicate(singleNonDuplicate));
         // System.out.println(largestDigit(n));
         // System.out.println(Arrays.toString(divisors(6)));
         // System.out.println(divisorsOptimize(6));
@@ -2248,7 +2340,7 @@ public class Practice {
         // System.out.println(fourSum(numsFourSum, target));
         // System.out.println(fourSumOptimal(numsFourSum,target));
 
-        // System.out.println(maxSubArrayOptimal(maxSubnum));
+        // System.out.println(maxSubArray(maxSubnum));
 
         // System.out.println(majorityElementTwo(majorityElementTwo));
         // System.out.println(Arrays.toString(findMissingRepeatingNumbers(missingAndReapeting)));
@@ -2257,8 +2349,9 @@ public class Practice {
         // System.out.println(findMedianSortedArrays(nums1,nums2));
 
         // System.out.println(checkDivisibility(99));
-        System.out.println(totalFruitsBetter(fruits));
-        System.out.println(kDistinctCharOptimal(distictChar, 2));
+        // System.out.println(totalFruitsBetter(fruits));
+        // System.out.println(kDistinctCharOptimal(distictChar, 2));
+        // System.out.println(maxProduct(maxProduct));
 
     }
 

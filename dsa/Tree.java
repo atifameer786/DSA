@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
+import javax.swing.tree.TreeNode;
+
 public class Tree {
 
     int data;
@@ -200,7 +202,50 @@ public class Tree {
         return 0;
 
     }
-   
+
+    public int maxDepth(Tree root) {
+
+        if(root == null){
+            return 0;
+        }
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
+        return 1 + Math.max(left,right);
+      
+       
+    }
+
+    public int singleNonDuplicate(int[] nums) {
+
+        int n = nums.length;
+        int l = 1;
+        int r = n-2;
+        if(n==1){
+            return nums[0];
+        }
+        if(nums[0]!=nums[1]){
+            return nums[0];
+        }
+        if(nums[n] !=nums[n-1]){
+            return nums[n];
+        }
+
+        
+        while(l<=r){
+
+            int mid = (l+r)/2;
+
+            if(mid%2==1 && nums[mid] !=nums[mid-1])
+
+        }
+
+        
+
+
+
+    }
+
+
     
 
 
